@@ -36,17 +36,26 @@ COPY src/shadowbox/scripts/update_mmdb.sh /etc/periodic/weekly/update_mmdb
 
 RUN /etc/periodic/weekly/update_mmdb
 
+WORKDIR /build
+
+COPY . .
+# RUN ls scripts
+RUN yarn install
+# RUN do_action shadowbox/server/build
+RUN yarn webpack --config=src/shadowbox/webpack.config.js
+
 WORKDIR /root/shadowbox
+RUN cp -r /build/build/shadowbox/app app
 
 RUN mkdir bin && curl -SsL https://github.com/Jigsaw-Code/outline-ss-server/releases/download/v${SS_VERSION}/outline-ss-server_${SS_VERSION}_linux_x86_64.tar.gz | tar xz -C bin outline-ss-server
 COPY third_party/prometheus/prometheus ./bin/
 COPY src/shadowbox/package.json .
-COPY yarn.lock .
+# COPY yarn.lock .
 
-RUN yarn install --prod
+# # RUN yarn install --prod
 
-# Install management service
-COPY build/shadowbox/app app/
+# # # Install management service
+# # COPY build/shadowbox/app app/
 
 # Create default state directory.
 RUN mkdir -p /root/shadowbox/persisted-state

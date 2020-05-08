@@ -24,7 +24,7 @@ import {PortProvider} from '../infrastructure/get_port';
 import * as json_config from '../infrastructure/json_config';
 import * as logging from '../infrastructure/logging';
 import {PrometheusClient, runPrometheusScraper} from '../infrastructure/prometheus_scraper';
-import {RolloutTracker} from '../infrastructure/rollout';	
+import {RolloutTracker} from '../infrastructure/rollout';
 import {AccessKeyId} from '../model/access_key';
 
 import {PrometheusManagerMetrics} from './manager_metrics';
